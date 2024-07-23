@@ -1,12 +1,14 @@
 
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
 import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import logo  from "../../../../src/IMG_9160.svg";
 import {navigation} from "../../../config/navigationMenu";
 import { Avatar, Button, Menu, MenuItem } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import AuthModal from '../../Auth/AuthModal';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUser, logout } from '../../../State/Auth/Action';
 
 
     
@@ -23,6 +25,11 @@ export default function Navigation() {
   const [anchorEl, setAnchorEl] = useState(null);
   const openUserMenu = Boolean(anchorEl);
   const navigate = useNavigate(); 
+  const jwt = localStorage.getItem("jwt")
+  const {auth} = useSelector(store=>store)
+  const dispatch = useDispatch();
+  const location = useLocation();
+
   const logoStyle = {
     mixBlendMode: 'multiply',
     height: "7rem"
@@ -52,6 +59,26 @@ export default function Navigation() {
     navigate(`/${category.id}/${section.id}/${item.id}`);
     close();  
   } 
+
+  useEffect(()=>{
+    if(jwt){
+        dispatch(getUser(jwt))
+    }
+  },[jwt,auth.jwt])
+
+  useEffect(()=>{
+    if(auth.user){
+      handleClose();
+    }
+    if(location.pathname === "/login" || location.pathname === "/register"){
+      navigate(-1);
+    }
+  },[auth.user])
+
+  const handleLogOut = ()=>{
+    dispatch(logout())
+    handleCloseUserMenu()
+  }
 
 
   return (
@@ -345,7 +372,7 @@ export default function Navigation() {
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                    {false ? (
+                    {auth.user ? (
                         <div style={{display:"flex",}}>
                             <Avatar
                             className='text-white'
@@ -359,7 +386,7 @@ export default function Navigation() {
                                 cursor:"pointer",
                             }}
                             >
-                                R
+                                {auth.user?.firstName[0].toUpperCase()}
                             </Avatar>
                             {   <Button
                                 id="basic-button"
@@ -382,7 +409,7 @@ export default function Navigation() {
                                 <MenuItem onClick={handleOrder}>
                                     My Orders
                                 </MenuItem>
-                                <MenuItem>
+                                <MenuItem onClick={handleLogOut}>
                                     Logout
                                 </MenuItem>
                             </Menu>
@@ -395,6 +422,7 @@ export default function Navigation() {
                         </Button>
                     )
                     }
+                    </div>
                   {/* <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
                     Sign in
                   </a>
@@ -402,7 +430,7 @@ export default function Navigation() {
                   <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
                     Create account
                   </a> */}
-                </div>
+                
 
                 {/* <div className="hidden lg:ml-8 lg:flex">
                   <a href="#" className="flex items-center text-gray-700 hover:text-gray-800">

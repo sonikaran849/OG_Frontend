@@ -6,9 +6,9 @@ const registerRequest = () =>({type:REGISTER_REQUEST});
 const registerSuccess = (user) =>({type:REGISTER_SUCCESS,payload:user});
 const registerFailure = (error) =>({type:REGISTER_FAILURE,payload:error});
 
-const token = localStorage.getItem("jwt");
+const jwt = localStorage.getItem("jwt");
 
-export const register =(userData)=> async(dispatch)=>{
+export const register =userData=> async dispatch=>{
     dispatch(registerRequest())
 
     try {
@@ -49,13 +49,13 @@ const getUserRequest = () =>({type:GET_USER_REQUEST});
 const getUserSuccess = (user) =>({type:GET_USER_SUCCESS,payload:user});
 const getUserFailure = (error) =>({type:GET_USER_FAILURE,payload:error});
 
-export const getUser =(userData)=> async(dispatch)=>{
+export const getUser =(jwt)=> async(dispatch)=>{
     dispatch(getUserRequest())
-
+    console.log("user",jwt);
     try {
-        const response = await axios.post(`${API_BASE_URL}/api/users/profile`,{
+        const response = await axios.get(`${API_BASE_URL}/api/users/profile`,{
             headers:{
-                "Authorization":`Bearer ${token}`
+                "Authorization":`Bearer ${jwt}`
             }
         })
         const user = response.data;
@@ -68,4 +68,5 @@ export const getUser =(userData)=> async(dispatch)=>{
 
 export const logout=()=>(dispatch)=>{
     dispatch({type:LOGOUT,payload:null})
+    localStorage.clear() 
 }

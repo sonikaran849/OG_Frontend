@@ -22,7 +22,8 @@ const CustomerRouters = () => {
         <Route path='/' element={<HomePage/>}></Route>
         <Route path='/cart' element={<Cart/>}></Route>
         <Route path='/women/accessories/watch'element={<Watch/>}></Route>
-        <Route path='/men/clothing/mens_tees' element={<Product/>}></Route>
+         <Route path='/men/clothing/mens_tees' element={<Product/>}></Route> 
+        {/* <Route path='/:topLevel/:secondLevel/thirdlevel' element={<Product/>}></Route> */}
         {/* <Route path='/men/clothing/shirt' element={<ShirtMen/>}></Route> */}
         <Route path='/product/:productId' element={<ProductDetails/>}></Route>
         <Route path='/checkout' element={<CheckOut/>}></Route>
