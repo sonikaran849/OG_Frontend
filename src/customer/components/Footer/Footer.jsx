@@ -1,5 +1,6 @@
 import { Button, Grid, Link, Typography } from '@mui/material'
 import React from 'react'
+import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 
 const Footer = () => {
   return (
@@ -71,18 +72,8 @@ const Footer = () => {
                 &copy; 2024 Originals. All rights reserved.
             </Typography>
             <Typography variant="body2" component="p" align= "center">
-                Made with Love by Me.
-            </Typography>
-            <Typography variant="body2" component="p" align= "center">
-                Icons made by{' '}
-                <Link href="https://www.freepik.com" color="inherit" underline="always"> Freepik 
-                </Link>{' '}
-                from{' '}
-                <Link href="https://www.flaticon.com/" color="inherit" underline="always">
-                    www.flaticon.com
-                </Link>
-            </Typography>
-            
+                Made with Love by Karan Soni <FavoriteOutlinedIcon style={{ color: 'red'}}></FavoriteOutlinedIcon>.
+            </Typography>   
         </Grid>
       </Grid>
     </div>
