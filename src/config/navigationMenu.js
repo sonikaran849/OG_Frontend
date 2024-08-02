@@ -22,23 +22,24 @@ export const navigation = {
             id: 'clothing',
             name: 'Clothing',
             items: [
-              { name: 'T-Shirts', id: 't-shirt' },  
-              { name: 'Tops', id:"top", href: `{women/clothing/tops}` },
-              { name: 'Dresses', id:"women_dress", href: '#' },
-              { name: 'Women Jeans', id: 'women_jeans' },
-              { name: 'Sweaters', id: 'sweater' },
+              { name: 'Tops', id:"top",
+                href: `{women/clothing/top}` },
+              { name: 'Dresses', id:"women_dress",
+                href: '{women/clothing/women_dress}' }
             ],
           },
           {
             id: 'accessories',
             name: 'Accessories',
             items: [
-              { name: 'Watches', id: 'watch', href: '{women/accessories/watch}' },
-              { name: 'Wallets', id: 'wallet' },
-              { name: 'Bags', id: 'bag' },
-              { name: 'Sunglasses', id: 'sunglasse' },
-              { name: 'Hats', id: 'hat' },
-              { name: 'Belts', id: 'belt' },
+              { name: 'Watches', id: 'mens_watches', 
+                href: '{women/accessories/mens_watches}' },
+              { name: 'Wallets', id: 'wallet',
+                href: '{women/accessories/wallet}'
+               },
+              { name: 'Bags', id: 'bag',
+                href: '{women/accessories/bag}'
+              },
             ],
           },
           {
@@ -79,12 +80,18 @@ export const navigation = {
             items: [
               { name: 'Oversized Tees', id: 'mens_tees' ,
               href: `{men/clothing/mens_tees}`},
-              { name: 'Shirt', id: 'shirt' },
-              { name: 'Men Jeans', id: 'men_jeans' },
-              { name: 'Sweaters', id: '#' },
-              { name: 'T-Shirts', id: 't-shirt' },
-              { name: 'Jackets', id: '#' },
-              { name: 'Activewear', id: '#' },
+              { name: 'Men Kurta', id: 'mens_kurta',
+                href: `{men/clothing/mens_kurta}`
+               },
+              { name: 'Men Jeans', id: 'mens_jeans',
+                href:  `{men/clothing/mens_jeans}`
+               },
+              { name: 'Sweaters', id: 'mens_sweater',
+                href: `{men/clothing/mens_sweater}`
+               },
+              { name: 'Jackets', id: 'mens_jackets' ,
+                href: `{men/clothing/mens_jackets}`
+              },
               
             ],
           },
@@ -92,8 +99,8 @@ export const navigation = {
             id: 'accessories',
             name: 'Accessories',
             items: [
-              { name: 'Watches', id: '#' ,href:''},
-              
+              { name: 'Watches', id: 'mens_watches', 
+                href: '{women/accessories/mens_watches}' }, 
             ],
           },
         ],

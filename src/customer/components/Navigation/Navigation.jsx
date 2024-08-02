@@ -9,6 +9,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import AuthModal from '../../Auth/AuthModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser, logout } from '../../../State/Auth/Action';
+import { getCart } from '../../../State/Cart/Action';
 
 
     
@@ -20,6 +21,7 @@ function classNames(...classes) {
 }
 
 export default function Navigation() {
+  const {cart}=useSelector(store=>store);
   const [open, setOpen] = useState(false)
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -30,10 +32,17 @@ export default function Navigation() {
   const dispatch = useDispatch();
   const location = useLocation();
 
+
   const logoStyle = {
     mixBlendMode: 'multiply',
     height: "7rem"
   };
+
+  useEffect(()=>{
+    dispatch(getCart());
+  }, [] )
+
+  
 
   const handleOrder = ()=>{
     navigate("/account/order");
@@ -77,6 +86,8 @@ export default function Navigation() {
 
   const handleLogOut = ()=>{
     dispatch(logout())
+    navigate("/");
+    window.location.reload();
     handleCloseUserMenu()
   }
 
@@ -247,7 +258,7 @@ export default function Navigation() {
 
               {/* Logo */}
               <div className="ml-4 flex lg:ml-0">
-                <a href="#">
+                <a href="#" onClick={()=> navigate("/")}>
                   <span className="sr-only">Your Company</span>
                   <img
                     className="h-8 w-auto"
@@ -373,7 +384,7 @@ export default function Navigation() {
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                     {auth.user ? (
-                        <div style={{display:"flex",}}>
+                        <div className='mt-6'>
                             <Avatar
                             className='text-white'
                             onClick={handleUserClick}
@@ -389,11 +400,12 @@ export default function Navigation() {
                                 {auth.user?.firstName[0].toUpperCase()}
                             </Avatar>
                             {   <Button
+                                
                                 id="basic-button"
                                 aria-controls={open ? "basic-menu" : undefined}
                                 aria-haspopup="true"
                                 aria-expanded={open ? "true" : undefined}
-                                onClick={handleUserClick}>
+                                >
                             </Button>}
                             <Menu 
                             id='basic-menu'
@@ -444,22 +456,15 @@ export default function Navigation() {
                   </a>
                 </div> */}
 
-                {/* Search */}
-                <div className="flex lg:ml-6">
-                  <a href="#" className="p-2 text-gray-400 hover:text-gray-500">
-                    <span className="sr-only">Search</span>
-                    <MagnifyingGlassIcon className="h-6 w-6" aria-hidden="true" />
-                  </a>
-                </div>
-
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
                   <a href="#" className="group -m-2 flex items-center p-2">
                     <ShoppingBagIcon
+                      onClick={()=>navigate("/cart")}
                       className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                       aria-hidden="true"
                     />
-                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
+                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{cart?.cart?.totalItem}</span>
                     <span className="sr-only">items in cart, view bag</span>
                   </a>
                 </div>

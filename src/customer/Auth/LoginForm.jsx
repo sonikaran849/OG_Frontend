@@ -1,19 +1,20 @@
 import { Button, Grid, TextField } from '@mui/material'
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
-import { login } from '../../State/Auth/Action';
+import { getUser, login } from '../../State/Auth/Action';
 
 const LoginForm = () => {
-
+    const jwt=localStorage.getItem("jwt");
     const navigate = useNavigate();
     const dispatch = useDispatch()
+    const { auth } = useSelector((store) => store);
 
-    // useEffect(()=>{
-    //   if(jwt){
-    //       dispatch(getUser(jwt))
-    //   }
-    // },[jwt,auth.jwt])
+    useEffect(()=>{
+      if(jwt){
+          dispatch(getUser(jwt))
+      }
+    },[jwt,auth.jwt])
 
     const handleSubmit = (event)=>{
         event.preventDefault();

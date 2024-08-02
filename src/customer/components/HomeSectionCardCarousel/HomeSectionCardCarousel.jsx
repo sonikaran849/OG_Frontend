@@ -5,7 +5,7 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { Button } from "@mui/material";
 
 
-const HomeSectionCardCarousel = ({data,SectionName}) => {
+const HomeSectionCardCarousel = ({data= [],SectionName}) => {
     const [activeIndex,setActiveIndex] = useState(0);
 
   const responsive = {
@@ -18,8 +18,13 @@ const HomeSectionCardCarousel = ({data,SectionName}) => {
   const slideNext = ()=>setActiveIndex(activeIndex+1);
 
   const syncActiveIndex = ({item})=>setActiveIndex(item)
+  
+  data = data?.slice(0,10);
 
-  const items = data.slice(0,10).map((item) => <HomeSectionCard product={item}/>);
+
+  const items = (data || []).map((i) => <HomeSectionCard product={i}/>);
+
+  const itemsLength = items.length;
 
   return (
     <div className="border">
@@ -33,7 +38,7 @@ const HomeSectionCardCarousel = ({data,SectionName}) => {
           onSlideChanged={syncActiveIndex}
           activeIndex={activeIndex}
         />
-        {activeIndex !== items.length-5 && <Button
+        {activeIndex !== itemsLength-5 && <Button
           variant="contained"
           className="z-50"
           onClick={slideNext}

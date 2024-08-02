@@ -8,7 +8,7 @@ const ProductCard = ({product}) => {
 
 
   return (
-    <div onClick={()=>navigate(`/product/${5}`)} className="productCard w-[15rem] m-3 transition-all cursor-pointer">
+    <div onClick={()=>navigate(`/product/${product._id}`)} className="productCard w-[15rem] m-3 transition-all cursor-pointer">
       <div className="h-[20rem]">
         <img
           className="h-full w-full object-cover object-top"
@@ -26,7 +26,7 @@ const ProductCard = ({product}) => {
         <div className="flex items-center space-x-2">
           <p className="font-semibold">₹{product.discountedPrice}</p>
           <p className="line-through opacity-50">₹{product.price}</p>
-          <p className="text-green-600 font-semibold">{product.discountedPercent} % off</p>
+          <p className="text-green-600 font-semibold">{product.discountPercent} % off</p>
         </div>
       </div>
     </div>

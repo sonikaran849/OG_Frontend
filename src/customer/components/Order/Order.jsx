@@ -1,6 +1,8 @@
-import { Grid } from '@mui/material'
-import React from 'react'
+import { Box, Grid } from '@mui/material'
+import React, { useEffect } from 'react'
 import OrderCard from './OrderCard'
+import { useDispatch, useSelector } from 'react-redux'
+import { getOrderHistory } from '../../../State/Order/Action'
 
 
 const orderStatus = [
@@ -12,6 +14,17 @@ const orderStatus = [
 
 
 const Order = () => {
+    const dispatch = useDispatch();
+    const jwt = localStorage.getItem("jwt");
+    const {order}=useSelector(store=>store);
+
+    useEffect(() => {
+        dispatch(getOrderHistory({ jwt }));
+      }, [jwt]);
+
+    console.log("orders: ", order);
+    console.log("users orders ",order.orders)
+
   return (
     <div>
         <Grid container sx={{justifyContent:"space-between"}}>
@@ -37,11 +50,14 @@ const Order = () => {
             </Grid>
 
             <Grid item xs={9}>
-                <div className='space-y-4'>
-                    {[1,1,1,1,1,1].map((item)=><div className='border rounded-md shadow-lg mr-10 p-5 hover:shadow-2xl'>
-                    <OrderCard/>
-                    </div>)}
-                </div>
+                <Box className="space-y-5 ">
+                {order.orders?.length>0 && order.orders?.map((order )=> {
+                return order?.orderItems?.map((item,index)=> 
+                <div className='border rounded-md shadow-lg mr-10 p-5 hover:shadow-2xl' >
+                    <OrderCard item={item} order={order} />
+                </div>)
+                })}
+                </Box>
                         
             </Grid>
         </Grid>
@@ -50,3 +66,6 @@ const Order = () => {
 }
 
 export default Order
+{/* <div className='border rounded-md shadow-lg mr-10 p-5 hover:shadow-2xl'>
+                    <OrderCard item={item} order={order} />
+                </div> */}

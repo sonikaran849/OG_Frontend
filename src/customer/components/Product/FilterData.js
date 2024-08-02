@@ -20,6 +20,9 @@ export const filters = [
             { value: "green", label: "Green"},
             { value: "purple", label: "Purple"},
             { value: "black", label: "Black"},
+            { value: "red", label: "Red"},
+            { value: "cream", label: "Cream"},
+            { value: "yellow", label: "Yellow"}
         ]
     },
     {
@@ -58,14 +61,6 @@ export const singleFilter = [
             { value: "60", label: "60% and Above"},
             { value: "70", label: "70% and Above"},
             { value: "80", label: "80% and Above"},
-        ]
-    },
-    {
-        id: "stock",
-        name: "Availability",
-        options: [
-            { value: "in_stock", label: "In Stock"},
-            { value: "out_of_stock", label: "Out Of Stock"},
         ]
     }
 ]

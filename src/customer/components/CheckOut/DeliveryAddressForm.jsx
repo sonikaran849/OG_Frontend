@@ -1,8 +1,19 @@
-import { Box, Button, Grid, TextField } from "@mui/material";
-import React from "react";
+import { Box,Grid, TextField } from "@mui/material";
+import React, { useState } from "react";
 import AddressCard from "../AddressCard/AddressCard";
+import { useDispatch, useSelector } from "react-redux";
+import { createOrder } from "../../../State/Order/Action";
+import { useNavigate } from "react-router-dom";
 
 const DeliveryAddressForm = () => {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+  const jwt = localStorage.getItem("jwt");
+  const {auth} = useSelector(store=>store)
+  const [selectedAddress, setSelectedAdress] = useState(null);
+
+  console.log("auth data == ",auth.user);
 
     const handleSubmit = (e)=>{
         e.preventDefault();
@@ -20,22 +31,40 @@ const DeliveryAddressForm = () => {
         }
 
         console.log("address",address);
+
+        const orderData = {address,jwt,navigate}
+        console.log("address===",orderData);
+        dispatch(createOrder(orderData));
+        //handleNext();
     }
 
-
+    const handleCreateOrder = (item) => {
+      dispatch(createOrder({ address:item, jwt, navigate }));
+      //handleNext();
+    };
+    
   return (
     <div>
       <Grid container spacing={4}>
         <Grid xs={12} lg={5} className="mt-8 border rounded-e-md shadow-md h-[30.5rem] overflow-y-scroll">
-          <div className="p-5 py-7 border-b cursor-pointer">
-            <AddressCard />
-            <button
-              type="submit"
-              className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-black px-8 py-3 text-base font-medium text-white hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-black-300 focus:ring-offset-2"
+        {auth?.user?.address?.map((item) => (
+            <div
+              onClick={() => setSelectedAdress(item)}
+              className="p-5 py-7 border-b cursor-pointer"
             >
-              Deliver Here
-            </button>
-          </div>
+              {" "}
+              <AddressCard address={item} />
+              {selectedAddress?.id === item.id && (
+                <button
+                onClick={()=>handleCreateOrder(item)}
+                type="submit"
+                className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-black px-8 py-3 text-base font-medium text-white hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-black-300 focus:ring-offset-2"
+              >
+                Delivere Here
+              </button>
+              )}
+            </div>
+          ))}
         </Grid>
 
         <Grid item xs={12} lg={7}>
