@@ -42,17 +42,6 @@ export const navigation = {
               },
             ],
           },
-          {
-            id: 'brands',
-            name: 'Brands',
-            items: [
-              { name: 'Full Nelson', id: '#' },
-              { name: 'My Way', id: '#' },
-              { name: 'Re-Arranged', id: '#' },
-              { name: 'Counterfeit', id: '#' },
-              { name: 'Significant Other', id: '#' },
-            ],
-          },
         ],
       },
       {
